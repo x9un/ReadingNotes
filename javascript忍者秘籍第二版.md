@@ -10,7 +10,7 @@
 generator是特殊类型的函数
 promise对象是一个占位符，暂时替代那些尚未计算出但未来会计算出的值
 
-### Q&A
+### Question
 1. generator 函数的主要用途是什么?
 
 2. 在异步代码中,为什么使用 promise 比使用简单的回调函数更好?
@@ -88,3 +88,67 @@ for(let element of DomTraversal(subTree)){   //使用 for-of 对节点进行循�
 
 13. 面向未来的 async 函数
 + async & await
+
+## chapter 7 - 面向对象与原型
++ 探讨原型
++ 使用函数作为构造器
++ 使用原型扩展对象
++ 避免常见的问题
++ 使用继承创建类
+
+### Question
++ 如何知道一个对象是否可以访问特定的属性
++ 在 Javascript 中使用对象时，为什么原型链至关重要
++ ES6 中的关键字 class 是否改变了 Javascript 中对象的工作机制
+
+### notes
+1. 理解原型
++ 查找属性时，若对象本身不具有该属性，则会查找原型上是否有该属性
++ 操作符 in 测试对象是否具有某一个特点的属性
++ 对象的原型属性是内置属性，无法直接访问
++ Object.setPrototypeOf(yoshi,hattori),将yoshi的原型设置为hattori
+
+2. 对象构造器与原型
++ 每个函数都有一个原型对象;每个函数的原型都有一个constructor属性，该属性指向函数本身;constructor对象的原型设置为新创建的对象的原型
++ 使用构造 new 时，新构造的对象设置为构造函数的原型的引用
+
+3. 实例属性
++ 在实例中可以查找到的属性，将不会查找原型
+
+4. Javascript 动态特性的副作用
++ 替换构造器原型后，新创建的实例所引用的是替换后的原型
+
+5. 通过构造函数实现对象类型
++ 使用 constructor 属性，我们可以访问创建该对象时所用的函数。这个特性可以用于类型校验
++ 操作符 instanceof 提供了一种用于检测一个实例是否由特定构造函数创建的方法
++ 使用 constructor 的引用创建新对象
+```js
+function Ninjia(){}
+
+const ninja = new Ninja();
+const ninja2 = new ninjia.constructor();
+//ninjia 和 ninjia2 是对同一原型的两个不同实例
+```
+
+6. 实现继承
+```js
+Ninja.prototype = new Person();
+//实现 Ninja 继承 Person
+```
++ 通过 instanceof 可以判定函数是否继承原型链上的对象功能
+
+7. 重写 constructor 属性的问题
++ 设置 Person 实例对象作为 Ninja 构造器的原型时，我们丢失了 Ninja 与 Ninja初始原型之间的关联
++ 调整属性的配置信息，可以使用内置的 Object.defineProperty
+
+8. instanceof 操作符
++ 真正语义：检查右边的函数原型是否存在于操作符左边的对象的原型链上
+
+9. 在 ES6 使用 Javascript 的 class
++ class 是一个语法糖，用于继承，底层是基于原型的实现
++ 静态方法:实例不能访问，类可以访问
+
+10. 实现继承
+(ES6)
++ `extends` 实现继承
++ `super` 调用基类构造函数
