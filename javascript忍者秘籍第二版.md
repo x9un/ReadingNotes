@@ -152,3 +152,28 @@ Ninja.prototype = new Person();
 (ES6)
 + `extends` 实现继承
 + `super` 调用基类构造函数
+
+## chapter 8 - 控制对象的访问
+### Question
+1. 通过 getter 和 setter 访问属性值有什么好处
+2. 代理与 getter 和 setter 的主要区别是什么
+3. 代理对象的常见问题是什么？列举3项代理对象的常见问题
+
+### notes
+1. 使用 getter 和 setter 控制属性访问
+2. 定义 getter 和 setter
++ 通过对象字面量/ES6中的class
++ 使用内置 Object.defineProperty 方法定义
++ 属性名前添加关键字 get/set
++ 获取属性值隐式调用 get，对属性赋值隐式调用 set
++ getter 可以定义计算属性 setter 可用于实现数据验证与日志记录
+3. 使用代理控制访问
++ 控制对象的全部交互类型
++ 定义当对象发生交互时可执行的自定义行为，如 读取/设置属性值，或调用方法
++ setter/getter 仅能控制单个对象属性，代理可用于对象交互的通用处理
++ 代理更易于在对象上添加日志
+
+4. 使用代理检测性能
+5. 使用代理自动填充属性
+6. 使用代理实现负数组索引
+7. 代理的性能消耗
