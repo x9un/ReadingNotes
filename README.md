@@ -1,5 +1,3 @@
 # ReadingNotes
-这是一个存放我看书过程中所记录笔记的仓库  
-吐槽一句:学校图书馆藏书真老  
-但是看看也没事-.-  
+This is a repository for the notes I have taken during my reading
 

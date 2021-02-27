@@ -177,3 +177,90 @@ Ninja.prototype = new Person();
 5. 使用代理自动填充属性
 6. 使用代理实现负数组索引
 7. 代理的性能消耗
+
+## chapter 9 - 处理集合
+### Question
+1. 使用对象作为字典或 Map 的常见缺陷有哪些?
+2. 在 Map 中，键值对可以是哪些类型?
+3. Set 中的成员必须是相同类型吗?
+
+### notes
++ 使用 Map 可以创建字典类型，建立键值对的映射关系
++ Set 集合中的成员都是唯一的,不允许出现重复的成员
+
+1. 创建数组
++ 使用内置 Array 构造函数
++ 使用数组字面量 [] 
++ 优先使用数组字面量:
+[] 2个字符,由于 js 的高度动态特性,无法阻止修改内置的 Array 构造函数，意味着 new Array() 创建的不一定是数组
++ 数组是对象
+
+2. 在数组两端添加，删除元素
++ push: 末尾
++ unshift: 开头添加
++ pop: 末尾
++ shift: 开头删除
++ pop/push 因为对末尾进行操作，速度会比 shift/unshift 快很多，非特殊情况不使用后者
+
+3. 在数组任意位置添加，删除元素
++ delete: 只是创建空元素
++ splice()
+
+4. 数组常用操作
++ 遍历数组：
+```js
+ninjas.forEach(ninja=>{
+	assert(ninja !== null,ninja);
+})
+```
++ 基于现有的数组元素映射创建新数组
+```js
+ninjas.map(ninja=>ninja.weapon);
+```
++ 验证数组元素是否匹配指定的条件
+```js
+ninjas.every(ninja => "name" in ninja);//所有
+ninjas.some(ninja => "weapon" in ninja);//至少一个
+```
++ 查找特定数组元素
+find(ES6):返回满足条件的第一个元素
+filter: 返回多个、
+indexOf()
+lastIndexOf()
+findIndex()
++ 聚合数组，基于数组元素计算
+.sort()
+.reduce()
+
+5. 复用内置的数组函数
+模拟类数组方法
+```js
+function(elem){
+	Array.prototype.push.call(this,elem);
+}
+```
+通常 Array.prototype.push 方法通过自身函数上下文执行数组。通过 call() 将上下文改为我们定义的对象
+
+6. 别把对象当作 Map
++ 原型继承属性(存在访问原型属性的风险)以及 Key 仅支持字符串，所以通常不能使用对象作为 map
++ 处理 Map 的一个基本概念是确定两个映射的 key 是否相等
++ forof 循环遍历 Map
+
+7. Set
++ 成员值唯一
++ 并集
+```js
+new Set([...ninjas],[...samurai]);
+```
++ 交集
+```js
+new Set(
+	[...ninjas].filter(ninja => samurai.has(ninja))
+	);
+```
++ 差集
+```js
+new Set(
+	[...ninjas].filter(ninja => !samurai.has(ninja))//只保留存在于 ninjas 中但不存在与 samurai 中的元素
+	);
+```
